@@ -1,0 +1,20 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans default-autowire="byName">
+	<bean id="productBean" class="[plugin]lib.cart.productBean" />
+	<bean id="cartDAO" class="[plugin]lib.cart.DAO" />
+	<bean id="cartService" class="[plugin]lib.cart.service" >
+	  <constructor-arg name="cartDAO"><ref bean="cartDAO" /></constructor-arg>
+	</bean>
+	
+  	<bean id="customerBean" class="[plugin]lib.customer.customerBean" />
+	<bean id="customerDAO" class="[plugin]lib.customer.DAO" />
+	<bean id="customerService" class="[plugin]lib.customer.service" >
+	  <constructor-arg name="customerDAO"><ref bean="customerDAO" /></constructor-arg>
+	</bean>
+	
+   <bean id="orderBean" class="[plugin]lib.order.orderBean" />
+   <bean id="orderDAO" class="[plugin]lib.order.DAO" />
+   <bean id="orderService" class="[plugin]lib.order.service" >
+	  <constructor-arg name="orderDAO"><ref bean="orderDAO" /></constructor-arg>
+	</bean>
+</beans>

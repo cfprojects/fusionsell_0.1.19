@@ -1,0 +1,197 @@
+<plugin>
+<name>FusionSell Cart</name>
+<!-- the package value becomes a part of the directory name where the plugin is installed. -->
+<package>FusionSell</package>
+<version>0.1.19</version>
+<provider>Glyn Jackson</provider>
+<providerURL>http://www.cfcoffee.co.uk</providerURL>
+<category>Application: Cart</category>
+<settings>
+	<!-- Company Name -->
+	<setting>
+		<name>fusion_companyName</name>
+		<label>Enter Company Name</label>
+		<hint>Enter your company name</hint>
+		<type>text</type>
+		<required>true</required>
+		<validation></validation>
+		<regex></regex>
+		<message></message>
+		<defaultvalue></defaultvalue>
+		<!-- These next two elements are for select boxes.  They should contain ^ delimited list -->
+		<optionlist></optionlist>
+		<optionlabellist></optionlabellist>
+	</setting>
+		<!-- order email -->
+	<setting>
+		<name>fusion_ordersEmail</name>
+		<label>Enter Order Email Notification Address</label>
+		<hint>Enter the email address you want new order notifications to be delivered to.</hint>
+		<type>text</type>
+		<required>true</required>
+		<validation>email</validation>
+		<regex></regex>
+		<message>Enter a valid email!</message>
+		<defaultvalue></defaultvalue>
+		<!-- These next two elements are for select boxes.  They should contain ^ delimited list -->
+		<optionlist></optionlist>
+		<optionlabellist></optionlabellist>
+	</setting>
+		<!-- Delivery  -->
+	<setting>
+		<name>fusion_DeliveryOption</name>
+		<label>Please Select How Delivery Will Be Calculated</label>
+		<hint>FusionSell calculates delivery charges at checkout. Please select how this charge will be calculated.</hint>
+		<type>select</type>
+		<required>true</required>
+		<validation></validation>
+		<regex></regex>
+		<message>You must select a way to calculate delivery charge. If you do not want to calculate this then select no delivery.</message>
+		<defaultvalue>1</defaultvalue>
+		<!-- These next two elements are for select boxes.  They should contain ^ delimited list -->
+		<optionlist>0^1</optionlist>
+		<optionlabellist>No Delivery^By Product Weight</optionlabellist>
+	</setting>
+	<!-- Default Currency  -->
+	<setting>
+		<name>fusion_Defaultcurrency</name>
+		<label>Please enter the sites default currency</label>
+		<hint>Please enter your default site currency.</hint>
+		<type>select</type>
+		<required>true</required>
+		<validation></validation>
+		<regex></regex>
+		<message></message>
+		<defaultvalue>1</defaultvalue>
+		<optionlist>163^36^8364</optionlist>
+		<optionlabellist>GBP^US Dollar^Euro</optionlabellist>
+	</setting>
+	<!-- Show prices without being logged in?  -->
+	<setting>
+		<name>fusion_PriceWithoutLogIn</name>
+		<label>Show product prices without being logged in?</label>
+		<hint>Do you want the public to see prices on your site without first having to log in? Customers are still required to login to make a purchase.</hint>
+		<type>selectbox</type>
+		<required>true</required>
+		<validation></validation>
+		<regex></regex>
+		<message></message>
+		<defaultvalue>yes</defaultvalue>
+		<optionlist>yes^no</optionlist>
+		<optionlabellist>Yes^No</optionlabellist>
+	</setting>
+		<!-- xmlPath -->
+		<setting>
+		<name>xmlPath</name>
+		<label>Configuration Location</label>
+		<hint>You don't need to change this unless you have edited the location of the ColdSpring config yourself.</hint>
+		<type>text</type>
+		<required>true</required>
+		<validation></validation>
+		<regex></regex>
+		<message></message>
+		<defaultvalue>config/coldspring.xml</defaultvalue>
+		<optionlist></optionlist>
+		<optionlabellist></optionlabellist>
+	</setting>
+	<setting>
+		<!-- eventVariable -->
+		<name>eventVariable</name>
+		<label>Event Variable</label>
+		<hint>DON'T CHANGE THIS! Variable that that coldspring will be assigned to within the event whenever a page renders</hint>
+		<type>text</type>
+		<required>true</required>
+		<validation></validation>
+		<regex></regex>
+		<message></message>
+		<defaultvalue>FusionSellCS</defaultvalue>
+		<optionlist></optionlist>
+		<optionlabellist></optionlabellist>
+	</setting>
+	<setting>
+		<!-- injectMura-->
+		<name>injectMura</name>
+		<label>Inject Service Factory</label>
+		<hint>Yes only</hint>
+		<type>selectbox</type>
+		<required>true</required>
+		<validation></validation>
+		<regex></regex>
+		<message></message>
+		<defaultvalue>Yes</defaultvalue>
+		<optionlist>Yes</optionlist>
+		<optionlabellist>Yes</optionlabellist>
+	</setting>
+</settings>
+
+<!--  Event Handlers are a way to map components to events -->
+
+<!--
+Script or EventHandler events
+
+onGlobalLogin
+onApplicationLoad
+onApplicationLoad
+onGlobalRequestStart
+onSiteRequestStart
+onRenderStart
+onSiteLogin
+onContentDelete
+onContentDeleteVersion
+onContentDeleteVersionHistory
+onContentSave
+onContentEdit
+onUserCreate
+onUserUpdate
+onUserDelete
+onGroupCreate
+onGroupUpdate
+onGroupDelete
+onFeedSave
+onFeedUpdate
+onFeedDelete
+<eventHandler event="onSiteRequestStart" component="eventScripts.onSiteRequestStart" />
+<eventHandler event="onContentSave" component="eventHandlers.loader" persist="true"/>
+<eventHandler event="onComponentSave" component="eventHandlers.loader" persist="true"/>
+<eventHandler event="onFormSave" component="eventHandlers.loader" persist="true"/>
+-->
+
+<eventHandlers>
+<eventHandler event="onApplicationLoad" component="eventHandlers.loader" persist="true"/>
+<eventHandler event="onSite404" component="eventHandlers.onSite404" persist="true"/>
+<eventHandler event="onPageViewCartBodyRender" component="eventHandlers.pageRender" persist="true"/>
+<eventHandler event="onPageCheckoutBodyRender" component="eventHandlers.pageRender" persist="true"/>
+<eventHandler event="onPageOrderStatusBodyRender" component="eventHandlers.pageRender" persist="true"/>
+
+<eventHandler event="onSiteRequestStart" component="eventHandlers.loader" persist="true"/>
+<eventHandler event="onSiteRequestStart" component="eventHandlers.securityInterceptor" persist="true"/>
+
+
+</eventHandlers>
+
+<!-- For display objects the the location attribute determines whether display objects for the plugin will execute locally of globally
+Locally means /[siteid]/includes/plugins/[package]_[pluginID]/
+Globally means /plugins/[package]_[pluginID]/
+
+<displayobject name="Shopping Cart - View Cart" displaymethod="ShoppingCart" displayobjectfile="displayObjects/shoppingCart.cfm"/>
+    <displayobject name="Checkout Step 1 - Shipping Address" displaymethod="CheckoutShipping" displayobjectfile="displayObjects/checkoutStep1.cfm"/>
+    <displayobject name="Checkout Step 2 - Order Confirm" displaymethod="CheckoutConfirm" displayobjectfile="displayObjects/checkoutStep2.cfm"/>
+ -->
+<displayobjects location="global">
+	<displayobject name="Product Page: Add to Button" displaymethod="AddToCart" displayobjectfile="displayObjects/addToCart.cfm"/>
+	<displayobject name="Product Page: Images" displaymethod="prodImg" displayobjectfile="displayObjects/productImages.cfm"/>
+	<displayobject name="Cart Widget" displaymethod="CartWidget" displayobjectfile="displayObjects/shoppingCartWidget.cfm"/>
+
+</displayobjects>
+</plugin>
+
+
+
+
+
+
+
+
+
+
+
